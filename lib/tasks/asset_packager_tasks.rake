@@ -51,10 +51,10 @@ namespace :asset do
               print " OK ".green
             else
               puts
-              print output.gsub('lint warning:', "#{'lint warning'.yellow}:")
-                .gsub('html error:', "#{'html error'.red}:")
-                .gsub('SyntaxError:', "#{'SyntaxError'.red}:")
-                .gsub(' warning:', "#{' warning'.yellow}:")
+              print output.gsub('lint warning:', "#{'lint warning'.yellow}:").
+                gsub('html error:', "#{'html error'.red}:").
+                gsub('SyntaxError:', "#{'SyntaxError'.red}:").
+                gsub(' warning:', "#{' warning'.yellow}:")
             end
             source = File.open(path, 'r:utf8', &:read)
             res = Synthesis::Compiler::Uglify.compress(source)
