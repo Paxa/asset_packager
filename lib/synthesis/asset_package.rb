@@ -145,8 +145,12 @@ module Synthesis
     # asset_packages.yml, unless we don't have the 'compilers' options specified at all.
     def sort_and_clean_compilers(compilers, options)
       return compilers unless options['compilers'] && options['compilers'].length > 0
-      compilers.select!{ |c| options['compilers'].include?(c[:class].to_s.demodulize.downcase) }
-      compilers.sort_by!{ |c| options['compilers'].index(c[:class].to_s.demodulize.downcase) }
+      compilers = compilers.select do |c|
+        options['compilers'].include?(c[:class].to_s.demodulize.downcase)
+      end
+      compilers = compilers.sort_by do |c|
+        options['compilers'].index(c[:class].to_s.demodulize.downcase)
+      end
     end
 
     def package_exists?
