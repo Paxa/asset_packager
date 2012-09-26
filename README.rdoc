@@ -26,72 +26,74 @@ This code is released under the MIT license (like Ruby). You're free to rip it u
 
 == How to Use:
 
-1. Download and install the plugin:
+=== Download and install the plugin:
 
-    rails plugin install git://github.com/Paxa/asset_packager.git
+  rails plugin install git://github.com/Paxa/asset_packager.git
 
-  Also available as a gem, you can add to Gemfile following line
+Also available as a gem, you can add to Gemfile following line
 
-    gem "asset_packager", :github => "Paxa/asset_packager"
+  gem "asset_packager", :github => "Paxa/asset_packager"
 
 If you use it with Rails 2.3, then I recommend you to hack Rakefile of your application to make it load tasks from required gems. See example https://gist.github.com/3785611
 
-2. Run the rake task "asset:packager:create_yml" to generate the /config/asset_packages.yml file the first time. You will need to reorder files under 'base' so dependencies are loaded in correct order. Feel free to rename or create new file packages.
+=== Run the rake task "asset:packager:create_yml"
 
-    rake asset:packager:create_yml
+I will generate the /config/asset_packages.yml file the first time. You will need to reorder files under 'base' so dependencies are loaded in correct order. Feel free to rename or create new file packages.
 
-== Examples of config/asset_packages.yml
+  rake asset:packager:create_yml
+
+==== Examples of config/asset_packages.yml
 
 Example from a fresh rails app after running the rake task. (The 'stylesheets' listing is blank because a
 default rails app has no stylesheets yet.):
 
-```
----
-options:
+  ---
+  options:
     compilers:
-        - closure
-        - uglify
-
-javascripts:
-- base:
-  - prototype
-  - effects
-  - dragdrop
-  - controls
-  - application
-stylesheets:
-- base: []
-```
+      - closure
+      - uglify
+  javascripts:
+  - base:
+    - jquery
+    - jquery.ui
+    - jquery.class
+    - widgets/big_menu
+    - application
+  stylesheets:
+  - base:
+    - datepicker
+    - application
 
 Multiple packages:
 
-```
----
-options:
+  ---
+  options:
     compilers:
-        - closure
-        - uglify
+      - closure
+      - uglify
 
-javascripts:
-- base:
-  - prototype
-  - effects
-  - controls
-  - dragdrop
-  - application
-- secondary:
-  - foo
-  - bar
-stylesheets:
-- base:
-  - screen
-  - header
-- secondary:
-  - foo
-  - bar
-```
+  javascripts:
+  - base:
+    - prototype
+    - effects
+    - controls
+    - dragdrop
+    - application
+  - secondary:
+    - foo
+    - bar
+  stylesheets:
+  - base:
+    - screen
+    - header
+  - secondary:
+    - foo
+    - bar
 
-3. Run the rake task `asset:packager:build_all` to generate the compressed, merged versions for each package. Whenever you rearrange the yaml file, you'll need to run this task again.
+
+=== Run the rake task `asset:packager:build_all`
+
+It will generate the compressed, merged versions for each package. Whenever you rearrange the yaml file, you'll need to run this task again.
 
   rake asset:packager:build_all
 
