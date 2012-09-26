@@ -10,22 +10,6 @@ When in development, it allows you to use your original versions and retain form
 
 This code is released under the MIT license (like Ruby). You're free to rip it up, enhance it, etc. And if you make any enhancements, I'd like to know so I can add them back in. Thanks!
 
-== Credit
-
-This Rails Plugin was inspired by Cal Henderson's article
-"Serving JavaScript Fast" on Vitamin:
-http://www.thinkvitamin.com/features/webapps/serving-javascript-fast
-
-It also uses the Ruby JavaScript Minifier created by
-Douglas Crockford.
-http://www.crockford.com/javascript/jsmin.html
-
-...and Google's Closure Compiler, which compresses better than Crockford's JSMin, but requires an internet connection and your JS code to be sent over the 'net to Google.
-http://closure-compiler.appspot.com/
-
-...and Mihai Bazon's excellent UglifyJS, running on NodeJS, that compresses on par with Google's Closure Compiler, but does so in a fraction of the time and does so on your local machine, as long as you have NodeJS installed.
-https://github.com/mishoo/UglifyJS
-
 == Key Features
 
 * Merges and compresses JavaScript and CSS when running in production, either on demand or ahead of time using the provided rake tasks. Configurable to use any of the available compilers, with fallback to the next preferred compiler if needed.
@@ -40,50 +24,28 @@ https://github.com/mishoo/UglifyJS
 * YAML configuration file for mapping JavaScript and CSS files to packages.
 * Rake Task for auto-generating the YAML file from your existing JavaScript files.
 
-== Updates
-
-February 2011: (sponsored by lunardawn studios)
-* Standardized compiler API.
-* Added support for UglifyJS using NodeJS.
-* Added configurable compiler fallback.
-
-December 2010:
-* Rails 3.0.3 support.
-
-June 2010:
-* Works fine with Rails 3 beta 3.
-* Sets the built packages' modification times to the latest mtime of the source files, or order to be more compatible with Rails asset ID caching.
-
-November 2008:
-* Rails 2.2 compatibility fixes
-* No more mucking with internal Rails functions, which means:
-  * Return to use of query-string timestamps. Greatly simplifies things.
-  * Multiple asset-hosts supported
-  * Filenames with "."'s in them, such as "jquery-x.x.x" are supported.
-* Now compatible with any revision control system since it no longer uses revision numbers.
-* Packages generated on demand in production mode. Running create_all rake task no longer necessary.
-
 == How to Use:
 
 1. Download and install the plugin:
 
-  rails plugin install git://github.com/Paxa/asset_packager.git
+    rails plugin install git://github.com/Paxa/asset_packager.git
 
-Also available as a gem, you can add to Gemfile following line
+  Also available as a gem, you can add to Gemfile following line
 
-  gem "asset_packager", :github => "Paxa/asset_packager"
+    gem "asset_packager", :github => "Paxa/asset_packager"
 
 If you use it with Rails 2.3, then I recommend you to hack Rakefile of your application to make it load tasks from required gems. See example https://gist.github.com/3785611
 
 2. Run the rake task "asset:packager:create_yml" to generate the /config/asset_packages.yml file the first time. You will need to reorder files under 'base' so dependencies are loaded in correct order. Feel free to rename or create new file packages.
 
-  rake asset:packager:create_yml
+    rake asset:packager:create_yml
 
 == Examples of config/asset_packages.yml
 
 Example from a fresh rails app after running the rake task. (The 'stylesheets' listing is blank because a
 default rails app has no stylesheets yet.):
 
+```
 ---
 options:
     compilers:
@@ -99,9 +61,11 @@ javascripts:
   - application
 stylesheets:
 - base: []
+```
 
 Multiple packages:
 
+```
 ---
 options:
     compilers:
@@ -125,8 +89,9 @@ stylesheets:
 - secondary:
   - foo
   - bar
+```
 
-3. Run the rake task "asset:packager:build_all" to generate the compressed, merged versions for each package. Whenever you rearrange the yaml file, you'll need to run this task again.
+3. Run the rake task `asset:packager:build_all` to generate the compressed, merged versions for each package. Whenever you rearrange the yaml file, you'll need to run this task again.
 
   rake asset:packager:build_all
 
@@ -195,8 +160,15 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-== Bugs / Pull Requests
+== Credit
 
-Contact the current maintainer (Brady Bouchard) via Github for change requests, etc.
+This Rails Plugin was inspired by Cal Henderson's article
+"Serving JavaScript Fast" on Vitamin:
+http://www.thinkvitamin.com/features/webapps/serving-javascript-fast
 
-Continuing updates sponsored by lunardawn studios - http://ldawn.com.
+It also uses the Ruby JavaScript Minifier created by
+Douglas Crockford.
+http://www.crockford.com/javascript/jsmin.html
+
+...and Google's Closure Compiler, which compresses better than Crockford's JSMin, but requires an internet connection and your JS code to be sent over the 'net to Google.
+http://closure-compiler.appspot.com/
