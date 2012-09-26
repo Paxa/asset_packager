@@ -185,7 +185,7 @@ module Synthesis
       def merged_file
         merged_file = ""
         @sources.each {|s|
-          File.open("#{@asset_path}/#{s}.#{@extension}", "r") { |f|
+          File.open("#{@asset_path}/#{s}.#{@extension}", "r:utf8") { |f|
             merged_file += f.read + "\n"
           }
         }

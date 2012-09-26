@@ -21,22 +21,3 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('Readme.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "asset_packager"
-    gemspec.version = Synthesis::Version.dup
-    gemspec.summary = "JavaScript and CSS Asset Compression for Production Rails Apps"
-    gemspec.description = "This Rails plugin makes it simple to merge and compress JavaScript and CSS for production use, increasing speed and saving bandwidth. Uses UglifyJS on NodeJS, Google's Closure Compiler or Douglas Crockford's JSMin."
-    gemspec.email = "brady@ldawn.com"
-    gemspec.homepage = "https://github.com/brady8/asset_packager"
-    gemspec.authors = ["Scott Becker", "Brady Bouchard", "Igor Galeta"]
-    gemspec.files = FileList["[A-Z]*", "lib/**/*"]
-    gemspec.rubyforge_project = "asset_packager"
-  end
-  
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler not available. Install it with: gem install jeweler"
-end

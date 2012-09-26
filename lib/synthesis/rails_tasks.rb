@@ -1,0 +1,1 @@
+load File.join(File.dirname(__FILE__), '..', 'tasks', 'asset_packager_tasks.rake')

@@ -1,26 +1,33 @@
 module Synthesis
   module Compiler
     class Uglify
-  
       class << self
-        
         def description
-          'UglifyJS running on Node.js.'
+          "UglifyJS running from gem 'uglifier'."
         end
-            
+
         def compress(source)
-      
-          raise CompileError.new("You need to install node.js in order to compile using UglifyJS.") unless %x[which node].length > 1
-          IO.popen("cd #{Pathname.new(File.join(File.dirname(__FILE__),'node-js')).realpath} && node uglify.js", "r+") do |io|
-            io.write(source)
-            io.close_write
-            compressed_source = io.read
+          require 'uglifier'
+
+          begin
+            Uglifier.new(:ascii_only => false).compile(source)
+          rescue => e
+            if e.is_a?(ExecJS::ProgramError) && e.message =~ /line:/
+              line_num = e.message.match(/line:\s*(\d+)/)[1].to_i
+              start_line = line_num > 5 ? line_num - 5 : 0
+              lines = source.split(/$/)[start_line .. line_num + 5]
+
+              lines.each_with_index do |line, i|
+                lines[i] = ("%6d: " % (i + start_line - 1)) + line.strip
+              end.join("\n")
+
+              puts "Parse error happen on line #{line_num}"
+              puts lines
+            end
+            raise e
           end
-      
         end
-    
       end
-  
     end
   end
 end
